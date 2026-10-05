@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pasaporte Iberoamericano · Passaporte Ibero-americano</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--az:#1B4B66;--cr:#F7F2E7;--oro:#C89B3C;--gr:#A83A3F;--bg:#F7F2E7;--tx:#0F3247;--soft:#3f5b6b;--card:#fff;--ln:#d5dde1;--hov:#efe8d6}
+@media (prefers-color-scheme:dark){:root{--bg:#0F1A20;--tx:#f2ece0;--soft:#a9c0cb;--card:#17242c;--ln:#2c3e47;--hov:#22323b;--cr:#17242c}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Inter,system-ui,sans-serif;padding:28px 16px 50px}
+.wrap{max-width:820px;margin:0 auto}
+header{text-align:center;margin-bottom:18px}
+.eyebrow{font-size:12.5px;color:var(--gr);font-weight:600;margin-bottom:6px}
+h1{font-family:Fraunces,serif;font-size:clamp(26px,5vw,38px);margin:0 0 4px;line-height:1.05}
+h1 small{display:block;font-size:.55em;font-weight:600;color:var(--soft);margin-top:4px}
+.how{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.box{background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:14px 16px}
+.box h2{font-family:Fraunces,serif;font-size:16px;margin:0 0 8px}
+.box ol{margin:0;padding-left:20px;font-size:13.5px;line-height:1.5;color:var(--soft)}
+.box li{margin-bottom:4px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;margin:14px 0}
+input{font:inherit;font-size:14px;padding:9px 12px;border:1.5px solid var(--ln);border-radius:8px;background:var(--card);color:var(--tx);width:200px;outline:none}
+button{font:inherit;font-weight:600;font-size:13.5px;padding:9px 16px;border-radius:999px;border:1.5px solid var(--az);background:var(--az);color:#F7F2E7;cursor:pointer}
+button.sec{background:transparent;color:var(--az)}
+@media (prefers-color-scheme:dark){button.sec{color:#9cc4d8}}
+.score{text-align:center;font-family:Fraunces,serif;font-size:19px;margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;background:var(--az);padding:6px;border-radius:14px}
+.cell{background:var(--cr);color:var(--tx);border-radius:8px;min-height:100px;padding:8px 6px;font-size:12px;line-height:1.3;display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;user-select:none;position:relative;font-weight:500}
+.cell:hover{background:var(--hov)}
+.cell.on{background:var(--oro);color:#0F3247}
+.cell.on::before{content:"";position:absolute;inset:5px;border:2px solid var(--gr);border-radius:5px;pointer-events:none}
+.cell.free{background:var(--gr);color:#F7F2E7;font-family:Fraunces,serif;font-weight:700;cursor:default}
+@media (max-width:640px){.how{grid-template-columns:1fr}.cell{font-size:10.5px;min-height:84px;padding:6px 3px}}
+@media print{.bar button,.bar input{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">COIL · MÉXICO · ARGENTINA · ESPAÑA · PORTUGAL</div>
+    <h1>Pasaporte Iberoamericano<small>Passaporte Ibero-americano</small></h1>
+  </header>
+
+  <div class="how">
+    <div class="box">
+      <h2>🇪🇸 Cómo se juega</h2>
+      <ol>
+        <li>Escribe tu nombre y mira tu cartilla: cada casillero es algo que un compañero podría saber o haber vivido.</li>
+        <li>Habla con compañeros de otros países y pregúntales por los casilleros.</li>
+        <li>Cuando alguien cumpla uno, márcalo tocándolo. ¡Una persona distinta por casillero!</li>
+        <li>Al terminar el tiempo, cuenta tus casilleros y compártelos: gana quien complete más.</li>
+      </ol>
+    </div>
+    <div class="box">
+      <h2>🇵🇹 Como se joga</h2>
+      <ol>
+        <li>Escreve o teu nome e vê a tua cartilha: cada casa é algo que um colega pode saber ou ter vivido.</li>
+        <li>Fala com colegas de outros países e pergunta-lhes pelas casas.</li>
+        <li>Quando alguém cumprir uma, marca-a tocando nela. Uma pessoa diferente por casa!</li>
+        <li>No fim do tempo, conta as tuas casas e partilha: ganha quem completar mais.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="bar">
+    <input id="name" maxlength="30" placeholder="Nombre / Nome">
+    <button id="lang" class="sec">Ver casilleros en português</button>
+    <button id="newCard" class="sec">Cartilla nueva / Nova cartilha</button>
+    <button id="print" class="sec">Imprimir / Imprimir</button>
+  </div>
+  <p class="score"><span id="who"></span> <span id="n">0</span> / 24</p>
+  <div class="grid" id="grid"></div>
+</div>
+
+<script>
+const ITEMS=[
+["Sabe qué es una \"sobremesa\"","Sabe o que é a \"sobremesa\" à espanhola (conversa à mesa)"],
+["Ha probado el mate","Já provou mate"],
+["Sabe de dónde vienen los churros","Sabe de onde vêm os churros"],
+["Usa la palabra \"vos\" en su día a día","Usa a palavra \"vos\" no dia a dia"],
+["Sabe qué se celebra el 5 de octubre en Portugal","Sabe o que se celebra a 5 de outubro em Portugal"],
+["Sabe qué es el fado","Sabe o que é o fado"],
+["Ha comido pan de muerto","Já comeu pan de muerto"],
+["Sabe qué es una quinceañera","Sabe o que é uma quinceañera"],
+["Conoce una palabra en portugués que no existe en español","Conhece uma palavra em português que não existe em espanhol"],
+["Sabe qué es la siesta y a qué hora se hace","Sabe o que é a sesta e a que horas se faz"],
+["Sabe qué es el asado y cómo se prepara","Sabe o que é o asado e como se prepara"],
+["Conoce una palabra de su país que sorprende a los demás","Conhece uma palavra do seu país que surpreende os outros"],
+["Sabe qué es \"la movida\" en España","Sabe o que é \"la movida\" em Espanha"],
+["Ha probado el bacalao","Já provou bacalhau"],
+["Sabe qué significa \"che\" en Argentina","Sabe o que significa \"che\" na Argentina"],
+["Conoce un plato mexicano que no sea taco","Conhece um prato mexicano que não seja taco"],
+["Sabe qué es un mapa de calor (heatmap)","Sabe o que é um mapa de calor (heatmap)"],
+["Prefiere un gráfico de barras a uno de torta","Prefere um gráfico de barras a um gráfico circular"],
+["Conoce el trabajo de Alberto Cairo, referente español en visualización de datos","Conhece o trabalho de Alberto Cairo, referência espanhola em visualização de dados"],
+["Ha usado Tableau, Power BI o Looker Studio","Já usou Tableau, Power BI ou Looker Studio"],
+["Sabe qué es el \"data storytelling\"","Sabe o que é \"data storytelling\""],
+["Tiene una herramienta de visualización favorita (Excel, Python, Flourish...)","Tem uma ferramenta de visualização favorita (Excel, Python, Flourish...)"],
+["Sabe qué es un dashboard","Sabe o que é um dashboard"],
+["Alguna vez armó una infografía","Já fez alguma vez uma infografia"]];
+const $=id=>document.getElementById(id),KEY='pasaporte-juego-v1';
+let order=[],marked=new Set(),pt=false;
+function shuffle(){order=ITEMS.map((_,i)=>i).sort(()=>Math.random()-.5)}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({order,marked:[...marked],name:$('name').value,pt}))}catch(e){}}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.order&&s.order.length===24){order=s.order;marked=new Set(s.marked);pt=!!s.pt;$('name').value=s.name||'';return}}catch(e){}shuffle()}
+function render(){
+  const g=$('grid');g.innerHTML='';let k=0;
+  for(let i=0;i<25;i++){
+    const c=document.createElement('div');
+    if(i===12){c.className='cell free';c.textContent='PASAPORTE IBEROAMERICANO'}
+    else{const idx=k++;c.className='cell'+(marked.has(idx)?' on':'');c.textContent=ITEMS[order[idx]][pt?1:0];
+      c.onclick=()=>{marked.has(idx)?marked.delete(idx):marked.add(idx);c.classList.toggle('on');upd()}}
+    g.appendChild(c);
+  }
+  $('lang').textContent=pt?'Ver casillas em español':'Ver casilleros en português';
+  upd(true);
+}
+function upd(skip){$('n').textContent=marked.size;$('who').textContent=$('name').value?$('name').value+':':'Puntaje / Pontuação:';if(!skip)save()}
+$('name').oninput=()=>upd();
+$('lang').onclick=()=>{pt=!pt;render();save()};
+$('newCard').onclick=()=>{shuffle();marked=new Set();render();save()};
+$('print').onclick=()=>window.print();
+load();render();
+</script>
+</body>
+</html>
